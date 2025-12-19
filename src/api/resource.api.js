@@ -52,6 +52,11 @@ export const markAsCompleted = async (id) => {
   return response.data;
 };
 
+export const toggleCompletion = async (id) => {
+  const response = await resourceAPI.post(`/${id}/complete`);
+  return response.data;
+};
+
 export const getAnalytics = async () => {
   const response = await resourceAPI.get('/analytics');
   return response.data;

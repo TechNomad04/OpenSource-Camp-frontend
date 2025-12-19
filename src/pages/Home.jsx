@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
-import { getAllResources, markAsCompleted } from '../api/resource.api';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronLeft, ChevronRight, ExternalLink, CheckCircle2, Circle } from 'lucide-react';
+import { getAllResources, toggleCompletion } from '../api/resource.api';
 
 const Home = () => {
   const [resources, setResources] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -23,103 +26,204 @@ const Home = () => {
     }
   };
 
-  const handleMarkCompleted = async (id) => {
+  const handleToggleCompletion = async (id, currentStatus) => {
     try {
-      await markAsCompleted(id);
+      const result = await toggleCompletion(id);
       setResources(resources.map(resource =>
-        resource._id === id ? { ...resource, completed: true } : resource
+        resource._id === id ? { ...resource, completed: result.completed } : resource
       ));
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to mark as completed');
+      setError(err.response?.data?.message || 'Failed to toggle completion');
     }
+  };
+
+  const nextResource = () => {
+    setCurrentIndex((prev) => (prev + 1) % resources.length);
+  };
+
+  const prevResource = () => {
+    setCurrentIndex((prev) => (prev - 1 + resources.length) % resources.length);
   };
 
   const getTypeBadgeColor = (type) => {
     const colors = {
-      video: 'bg-red-100 text-red-800',
-      article: 'bg-blue-100 text-blue-800',
-      pdf: 'bg-green-100 text-green-800',
-      course: 'bg-purple-100 text-purple-800',
-      other: 'bg-gray-100 text-gray-800'
+      video: 'bg-red-500/20 text-red-400 border-red-500/50',
+      article: 'bg-blue-500/20 text-blue-400 border-blue-500/50',
+      pdf: 'bg-green-500/20 text-green-400 border-green-500/50',
+      course: 'bg-purple-500/20 text-purple-400 border-purple-500/50',
+      other: 'bg-gray-500/20 text-gray-400 border-gray-500/50'
     };
     return colors[type] || colors.other;
   };
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-lg">Loading resources...</div>
+      <div className="flex items-center justify-center min-h-screen bg-gray-900">
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+          className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full"
+        />
       </div>
     );
   }
 
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Educational Resources</h1>
-
-      {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center px-4">
+        <div className="bg-red-500/20 border border-red-500/50 text-red-200 px-6 py-4 rounded-lg">
           {error}
         </div>
-      )}
+      </div>
+    );
+  }
 
-      {resources.length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-gray-500 text-lg">No resources available yet.</p>
+  if (resources.length === 0) {
+    return (
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center px-4">
+        <div className="text-center">
+          <p className="text-gray-400 text-lg">No resources available yet.</p>
         </div>
-      ) : (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {resources.map((resource) => (
-            <div
-              key={resource._id}
-              className="bg-white rounded-lg shadow-md p-6 border border-gray-200 hover:shadow-lg transition"
+      </div>
+    );
+  }
+
+  const currentResource = resources[currentIndex];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black py-8 px-4">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-8"
+        >
+          <h1 className="text-4xl font-bold text-white mb-2">Educational Resources</h1>
+          <p className="text-gray-400">
+            {currentIndex + 1} of {resources.length}
+          </p>
+        </motion.div>
+
+        {/* Slideshow Container */}
+        <div className="relative">
+          {/* Navigation Arrows */}
+          {resources.length > 1 && (
+            <>
+              <button
+                onClick={prevResource}
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm border border-gray-700 rounded-full flex items-center justify-center text-white hover:bg-gray-700 transition shadow-lg"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <button
+                onClick={nextResource}
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-800/80 backdrop-blur-sm border border-gray-700 rounded-full flex items-center justify-center text-white hover:bg-gray-700 transition shadow-lg"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            </>
+          )}
+
+          {/* Resource Card */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentResource._id}
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ duration: 0.3 }}
+              className="bg-gray-800/80 backdrop-blur-xl border border-gray-700/50 rounded-2xl shadow-2xl p-8 md:p-12"
             >
-              <div className="flex items-start justify-between mb-3">
-                <h3 className="text-xl font-semibold text-gray-900 flex-1">
-                  {resource.title}
-                </h3>
+              {/* Type Badge */}
+              <div className="flex justify-between items-start mb-6">
                 <span
-                  className={`px-2 py-1 rounded text-xs font-medium ${getTypeBadgeColor(resource.type)}`}
+                  className={`px-4 py-2 rounded-full text-sm font-medium border ${getTypeBadgeColor(currentResource.type)}`}
                 >
-                  {resource.type}
+                  {currentResource.type}
                 </span>
-              </div>
-
-              <p className="text-gray-600 mb-4 line-clamp-3">
-                {resource.description}
-              </p>
-
-              <div className="flex items-center justify-between mb-4">
-                <a
-                  href={resource.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 hover:text-blue-800 font-medium text-sm"
-                >
-                  Open Resource →
-                </a>
-                {resource.completed && (
-                  <span className="text-green-600 text-sm font-medium">
-                    ✓ Completed
-                  </span>
+                {currentResource.completed && (
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="flex items-center gap-2 text-green-400"
+                  >
+                    <CheckCircle2 className="w-5 h-5" />
+                    <span className="text-sm font-medium">Completed</span>
+                  </motion.div>
                 )}
               </div>
 
-              {!resource.completed && (
-                <button
-                  onClick={() => handleMarkCompleted(resource._id)}
-                  className="w-full py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+              {/* Title */}
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                {currentResource.title}
+              </h2>
+
+              {/* Description */}
+              <p className="text-gray-300 text-lg mb-8 leading-relaxed">
+                {currentResource.description}
+              </p>
+
+              {/* Actions */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <motion.a
+                  href={currentResource.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex-1 flex items-center justify-center gap-2 py-4 px-6 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium rounded-lg hover:from-blue-700 hover:to-blue-800 transition shadow-lg"
                 >
-                  Mark as Completed
-                </button>
-              )}
-            </div>
-          ))}
+                  <ExternalLink className="w-5 h-5" />
+                  Open Resource
+                </motion.a>
+
+                <motion.button
+                  onClick={() => handleToggleCompletion(currentResource._id, currentResource.completed)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`flex-1 flex items-center justify-center gap-2 py-4 px-6 font-medium rounded-lg transition shadow-lg ${
+                    currentResource.completed
+                      ? 'bg-gray-700 text-white hover:bg-gray-600 border border-gray-600'
+                      : 'bg-green-600 text-white hover:bg-green-700'
+                  }`}
+                >
+                  {currentResource.completed ? (
+                    <>
+                      <Circle className="w-5 h-5" />
+                      Mark as Incomplete
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle2 className="w-5 h-5" />
+                      Mark as Completed
+                    </>
+                  )}
+                </motion.button>
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
-      )}
+
+        {/* Dots Indicator */}
+        {resources.length > 1 && (
+          <div className="flex justify-center gap-2 mt-8">
+            {resources.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`w-2 h-2 rounded-full transition ${
+                  index === currentIndex
+                    ? 'bg-blue-500 w-8'
+                    : 'bg-gray-700 hover:bg-gray-600'
+                }`}
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
 
 export default Home;
-
