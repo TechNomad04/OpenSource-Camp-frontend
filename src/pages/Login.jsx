@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Mail, Lock, LogIn, UserPlus } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { getUserProgress } from '../api/user.api';
 import { REGISTER_FORM_URL } from '../constants';
 
 const Login = () => {
@@ -21,7 +22,40 @@ const Login = () => {
     const result = await login(email, password);
 
     if (result.success) {
-      navigate('/page/1');
+      // Try to redirect to last viewed page
+      try {
+        const progress = await getUserProgress();
+        const lastViewedPage = progress.lastViewedPage || 1;
+        const completedPages = progress.completedPages || [];
+        
+        // Determine the highest accessible page
+        let targetPage = lastViewedPage;
+        
+        // Check if last viewed page is accessible
+        if (lastViewedPage === 1) {
+          targetPage = 1;
+        } else if (completedPages.includes(lastViewedPage - 1)) {
+          // Previous page is completed, so last viewed page is accessible
+          targetPage = lastViewedPage;
+        } else {
+          // Find the highest unlocked page
+          let highestUnlocked = 1;
+          for (let i = 1; i <= lastViewedPage; i++) {
+            if (i === 1 || completedPages.includes(i - 1)) {
+              highestUnlocked = i;
+            } else {
+              break;
+            }
+          }
+          targetPage = highestUnlocked;
+        }
+        
+        navigate(`/page/${targetPage}`);
+      } catch (error) {
+        console.error('Error fetching last viewed page:', error);
+        // Fallback to page 1
+        navigate('/page/1');
+      }
     } else {
       setError(result.message || 'Login failed');
     }

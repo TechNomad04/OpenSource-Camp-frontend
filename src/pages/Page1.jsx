@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Github, CheckCircle2, ExternalLink, ArrowRight } from 'lucide-react';
+import { Github, CheckCircle2, ExternalLink, ArrowRight, Edit2, X } from 'lucide-react';
 import { saveGitHubUsername, getUserProgress } from '../api/user.api';
 import ProgressIndicator from '../components/ProgressIndicator';
 
@@ -33,7 +33,13 @@ const Page1 = () => {
   };
 
   const handleOpenGitHub = () => {
-    window.open('https://github.com/signup', '_blank');
+    window.open('https://github.com/signup?wt.mc_id=studentamb_480361', '_blank');
+  };
+
+  const handleClear = () => {
+    // Keep the current value so user can edit it
+    setSuccess(false);
+    setError('');
   };
 
   const handleSubmit = async (e) => {
@@ -55,7 +61,9 @@ const Page1 = () => {
     }
 
     try {
-      await saveGitHubUsername(githubUsername.trim());
+      // If there was a previous success, clear it first
+      const clearPrevious = success;
+      await saveGitHubUsername(githubUsername.trim(), clearPrevious);
       setSuccess(true);
       
       // Show success message, then navigate
@@ -166,12 +174,24 @@ const Page1 = () => {
               animate={{ opacity: 1, scale: 1 }}
               className="mb-6 bg-green-500/20 backdrop-blur-sm border border-green-400/30 text-green-100 px-6 py-4 rounded-lg"
             >
-              <div className="flex items-center gap-3">
-                <CheckCircle2 className="w-6 h-6" />
-                <div>
-                  <p className="font-semibold">Great job{userName ? `, ${userName}` : ''}! 🚀</p>
-                  <p>Your GitHub username has been saved. Moving to the next step...</p>
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <CheckCircle2 className="w-6 h-6" />
+                  <div>
+                    <p className="font-semibold">Great job{userName ? `, ${userName}` : ''}! 🚀</p>
+                    <p>Your GitHub username ({githubUsername}) has been saved.</p>
+                  </div>
                 </div>
+                <motion.button
+                  onClick={handleClear}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center gap-2 px-4 py-2 bg-black/30 backdrop-blur-sm border border-white/20 text-white rounded-lg hover:bg-black/40 transition"
+                  title="Edit GitHub username"
+                >
+                  <Edit2 className="w-4 h-4" />
+                  <span className="text-sm">Edit</span>
+                </motion.button>
               </div>
             </motion.div>
           )}

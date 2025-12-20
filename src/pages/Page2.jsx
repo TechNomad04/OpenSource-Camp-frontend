@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { BookOpen, CheckCircle2, ExternalLink, ArrowRight, Mail } from 'lucide-react';
+import { BookOpen, CheckCircle2, ExternalLink, ArrowRight, Mail, Edit2 } from 'lucide-react';
 import { saveMicrosoftLearnEmail, getUserProgress } from '../api/user.api';
 import ProgressIndicator from '../components/ProgressIndicator';
 
@@ -36,6 +36,12 @@ const Page2 = () => {
     window.open('https://learn.microsoft.com?wt.mc_id=studentamb_480361', '_blank');
   };
 
+  const handleClear = () => {
+    // Keep the current value so user can edit it
+    setSuccess(false);
+    setError('');
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -50,7 +56,9 @@ const Page2 = () => {
     }
 
     try {
-      await saveMicrosoftLearnEmail(email.trim());
+      // If there was a previous success, clear it first
+      const clearPrevious = success;
+      await saveMicrosoftLearnEmail(email.trim(), clearPrevious);
       setSuccess(true);
       
       // Show success message
@@ -220,12 +228,24 @@ const Page2 = () => {
               animate={{ opacity: 1, scale: 1 }}
               className="mb-6 bg-green-500/20 backdrop-blur-sm border border-green-400/30 text-green-100 px-6 py-4 rounded-lg"
             >
-              <div className="flex items-center gap-3">
-                <CheckCircle2 className="w-6 h-6" />
-                <div>
-                  <p className="font-semibold">Excellent work{userName ? `, ${userName}` : ''}! 🎊</p>
-                  <p>Your Microsoft Learn email has been saved. You're making great progress!</p>
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <CheckCircle2 className="w-6 h-6" />
+                  <div>
+                    <p className="font-semibold">Excellent work{userName ? `, ${userName}` : ''}! 🎊</p>
+                    <p>Your Microsoft Learn email ({email}) has been saved.</p>
+                  </div>
                 </div>
+                <motion.button
+                  onClick={handleClear}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center gap-2 px-4 py-2 bg-black/30 backdrop-blur-sm border border-white/20 text-white rounded-lg hover:bg-black/40 transition"
+                  title="Edit Microsoft Learn email"
+                >
+                  <Edit2 className="w-4 h-4" />
+                  <span className="text-sm">Edit</span>
+                </motion.button>
               </div>
             </motion.div>
           )}

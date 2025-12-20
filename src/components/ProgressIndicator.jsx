@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { CheckCircle2, Lock, Circle } from 'lucide-react';
 import { getUserProgress } from '../api/user.api';
 
-const TOTAL_PAGES = 6; // Update this as more pages are added
+const TOTAL_PAGES = 7; // Update this as more pages are added
 
 const ProgressIndicator = () => {
   const [completedPages, setCompletedPages] = useState([]);

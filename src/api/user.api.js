@@ -27,13 +27,13 @@ userAPI.interceptors.request.use(
   }
 );
 
-export const saveGitHubUsername = async (githubUsername) => {
-  const response = await userAPI.post('/github', { githubUsername });
+export const saveGitHubUsername = async (githubUsername, clearPrevious = false) => {
+  const response = await userAPI.post('/github', { githubUsername, clearPrevious });
   return response.data;
 };
 
-export const saveMicrosoftLearnEmail = async (email) => {
-  const response = await userAPI.post('/microsoft-learn', { email });
+export const saveMicrosoftLearnEmail = async (email, clearPrevious = false) => {
+  const response = await userAPI.post('/microsoft-learn', { email, clearPrevious });
   return response.data;
 };
 
@@ -44,6 +44,16 @@ export const getUserProgress = async () => {
 
 export const markPageComplete = async (pageNumber) => {
   const response = await userAPI.post('/complete-page', { pageNumber });
+  return response.data;
+};
+
+export const markPageIncomplete = async (pageNumber) => {
+  const response = await userAPI.post('/incomplete-page', { pageNumber });
+  return response.data;
+};
+
+export const updateLastViewedPage = async (pageNumber) => {
+  const response = await userAPI.post('/last-viewed-page', { pageNumber });
   return response.data;
 };
 

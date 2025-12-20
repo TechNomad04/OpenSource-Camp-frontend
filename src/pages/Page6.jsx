@@ -27,8 +27,10 @@ const Page6 = () => {
   };
 
   const handleComplete = () => {
-    // Page 7 would be next, but for now just show completion
-    // Navigation can be added when Page 7 is created
+    // Navigate to next page after a short delay
+    setTimeout(() => {
+      navigate('/page/7');
+    }, 1500);
   };
 
   const videos = [
