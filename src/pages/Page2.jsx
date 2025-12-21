@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import { BookOpen, CheckCircle2, ExternalLink, ArrowRight, Mail, Edit2 } from 'lucide-react';
 import { saveMicrosoftLearnEmail, getUserProgress } from '../api/user.api';
 import ProgressIndicator from '../components/ProgressIndicator';
-import CompletionButton from '../components/CompletionButton';
 
 const Page2 = () => {
   const [email, setEmail] = useState('');
@@ -62,10 +61,9 @@ const Page2 = () => {
       await saveMicrosoftLearnEmail(email.trim(), clearPrevious);
       setSuccess(true);
       
-      // Show success message
+      // Show success message, then navigate
       setTimeout(() => {
-        // Navigate to next page when available, or show completion message
-        // For now, just show success
+        navigate('/page/3');
       }, 1500);
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to save email');
@@ -306,28 +304,13 @@ const Page2 = () => {
                   'Saving...'
                 ) : (
                   <>
-                    Complete Step 2
-                    <CheckCircle2 className="w-5 h-5" />
+                    Continue to Next Step
+                    <ArrowRight className="w-5 h-5" />
                   </>
                 )}
               </motion.button>
             </motion.form>
           )}
-
-          {/* Alternative Completion Option */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
-            className="mt-8 pt-6 border-t border-white/20"
-          >
-            <div className="text-center mb-4">
-              <p className="text-gray-300 text-sm">
-                Or, if you've already completed the Microsoft Learn setup:
-              </p>
-            </div>
-            <CompletionButton pageNumber={2} />
-          </motion.div>
         </motion.div>
       </div>
     </div>
