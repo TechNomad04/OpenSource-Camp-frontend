@@ -217,10 +217,10 @@ const Login = () => {
             {/* Divider */}
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-white"></div>
+                <div className="w-full border-t border-white/50"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-black/30 text-gray-300/80 backdrop-blur-sm">New User?</span>
+                <span className="px-3 py-1 bg-black/80 text-gray-300 backdrop-blur-sm border border-white/20 rounded-full">New User?</span>
               </div>
             </div>
 
