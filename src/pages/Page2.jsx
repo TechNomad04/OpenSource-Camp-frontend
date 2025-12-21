@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { BookOpen, CheckCircle2, ExternalLink, ArrowRight, Mail, Edit2 } from 'lucide-react';
 import { saveMicrosoftLearnEmail, getUserProgress } from '../api/user.api';
 import ProgressIndicator from '../components/ProgressIndicator';
+import CompletionButton from '../components/CompletionButton';
 
 const Page2 = () => {
   const [email, setEmail] = useState('');
@@ -312,6 +313,21 @@ const Page2 = () => {
               </motion.button>
             </motion.form>
           )}
+
+          {/* Alternative Completion Option */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+            className="mt-8 pt-6 border-t border-white/20"
+          >
+            <div className="text-center mb-4">
+              <p className="text-gray-300 text-sm">
+                Or, if you've already completed the Microsoft Learn setup:
+              </p>
+            </div>
+            <CompletionButton pageNumber={2} />
+          </motion.div>
         </motion.div>
       </div>
     </div>
