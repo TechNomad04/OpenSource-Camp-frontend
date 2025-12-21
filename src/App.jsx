@@ -109,16 +109,7 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <div 
-          className="min-h-screen"
-          style={{
-            backgroundImage: 'url(/background1.jpg)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            backgroundAttachment: 'fixed',
-          }}
-        >
+        <div className="min-h-screen">
           <Navbar />
           <AppRoutes />
         </div>
