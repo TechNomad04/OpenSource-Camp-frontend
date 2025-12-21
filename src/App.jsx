@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
 import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -22,21 +21,20 @@ function AppRoutes() {
   usePageTracking();
 
   return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/login" element={<Login />} />
-        
-        {/* Learning Pages - Sequential */}
-        <Route
-          path="/page/1"
-          element={
-            <ProtectedRoute>
-              <PageGuard pageNumber={1}>
-                <Page1 />
-              </PageGuard>
-            </ProtectedRoute>
-          }
-        />
+    <Routes location={location} key={location.pathname}>
+      <Route path="/login" element={<Login />} />
+      
+      {/* Learning Pages - Sequential */}
+      <Route
+        path="/page/1"
+        element={
+          <ProtectedRoute>
+            <PageGuard pageNumber={1}>
+              <Page1 />
+            </PageGuard>
+          </ProtectedRoute>
+        }
+      />
         <Route
           path="/page/2"
           element={
@@ -101,7 +99,6 @@ function AppRoutes() {
         <Route path="/" element={<Navigate to="/page/1" replace />} />
         <Route path="*" element={<Navigate to="/page/1" replace />} />
       </Routes>
-    </AnimatePresence>
   );
 }
 
@@ -109,16 +106,7 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <div 
-          className="min-h-screen"
-          style={{
-            backgroundImage: 'url(/background1.jpg)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            backgroundAttachment: 'fixed',
-          }}
-        >
+        <div className="min-h-screen">
           <Navbar />
           <AppRoutes />
         </div>

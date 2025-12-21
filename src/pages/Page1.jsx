@@ -79,22 +79,6 @@ const Page1 = () => {
 
   return (
     <div className="min-h-screen py-8 px-4 relative">
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px]"></div>
-      
-      {/* Subtle gradient overlay */}
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-orange-900/10 via-transparent to-blue-900/10"
-        animate={{
-          opacity: [0.2, 0.4, 0.2],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-
       <div className="max-w-4xl mx-auto relative z-10">
         {/* Progress Indicator */}
         <ProgressIndicator />
@@ -103,7 +87,7 @@ const Page1 = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-black/30 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-8 md:p-12 backdrop-saturate-150"
+          className="bg-black/80 backdrop-blur-md border border-white rounded-2xl p-8 md:p-12"
         >
           {/* Header */}
           <div className="text-center mb-8">
@@ -115,7 +99,7 @@ const Page1 = () => {
             >
               <Github className="w-16 h-16 text-orange-400" />
             </motion.div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Step 1: Set Up Your GitHub Account
             </h1>
             {userName && (
@@ -186,7 +170,7 @@ const Page1 = () => {
                   onClick={handleClear}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="flex items-center gap-2 px-4 py-2 bg-black/30 backdrop-blur-sm border border-white/20 text-white rounded-lg hover:bg-black/40 transition"
+                  className="flex items-center gap-2 px-4 py-2 bg-black/30 backdrop-blur-sm border border-white text-white rounded-lg hover:bg-black/40 transition"
                   title="Edit GitHub username"
                 >
                   <Edit2 className="w-4 h-4" />
@@ -226,7 +210,7 @@ const Page1 = () => {
                   onClick={handleOpenGitHub}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-black/20 backdrop-blur-md border border-white/20 text-white font-medium rounded-lg hover:bg-black/30 hover:border-white/30 transition shadow-lg"
+                  className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-black/20 backdrop-blur-md border border-white text-white font-medium rounded-lg hover:bg-black/30 transition"
                 >
                   <ExternalLink className="w-5 h-5" />
                   Create GitHub Account
@@ -244,7 +228,7 @@ const Page1 = () => {
                   value={githubUsername}
                   onChange={(e) => setGithubUsername(e.target.value)}
                   placeholder="e.g., octocat"
-                  className="w-full px-4 py-3 bg-black/20 backdrop-blur-md border border-white/20 rounded-lg text-white placeholder-gray-400/70 focus:outline-none focus:ring-2 focus:ring-orange-400/50 focus:border-orange-400/50 transition-all shadow-lg"
+                  className="w-full px-4 py-3 bg-black/20 backdrop-blur-md border border-white rounded-lg text-white placeholder-gray-400/70 focus:outline-none focus:ring-2 focus:ring-orange-400/50 focus:border-orange-400/50 transition-all"
                   required
                 />
                 <p className="mt-2 text-sm text-gray-400">
@@ -258,7 +242,7 @@ const Page1 = () => {
                 disabled={loading || !githubUsername.trim()}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full flex items-center justify-center gap-2 py-4 px-6 bg-gradient-to-r from-orange-500/90 to-orange-600/90 backdrop-blur-sm border border-orange-400/30 text-white font-medium rounded-lg hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-400/50 disabled:opacity-50 disabled:cursor-not-allowed transition shadow-xl shadow-orange-500/20"
+                className="w-full flex items-center justify-center gap-2 py-4 px-6 bg-gradient-to-r from-orange-500/90 to-orange-600/90 backdrop-blur-sm border border-orange-400/30 text-white font-medium rounded-lg hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-400/50 disabled:opacity-50 disabled:cursor-not-allowed transition"
               >
                 {loading ? (
                   'Saving...'

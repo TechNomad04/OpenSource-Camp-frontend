@@ -52,22 +52,6 @@ const Page4 = () => {
       {/* Microsoft Learn Plan Button - Top Right */}
       <LearnPlanButton />
 
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px]"></div>
-      
-      {/* Subtle gradient overlay */}
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-orange-900/10 via-transparent to-blue-900/10"
-        animate={{
-          opacity: [0.2, 0.4, 0.2],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-
       <div className="max-w-4xl mx-auto relative z-10">
         {/* Progress Indicator */}
         <ProgressIndicator />
@@ -76,7 +60,7 @@ const Page4 = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-black/30 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-8 md:p-12 backdrop-saturate-150"
+          className="bg-black/80 backdrop-blur-md border border-white rounded-2xl p-8 md:p-12"
         >
           {/* Header */}
           <div className="text-center mb-8">
@@ -88,7 +72,7 @@ const Page4 = () => {
             >
               <GitBranch className="w-16 h-16 text-green-400" />
             </motion.div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Step 4: Introduction to Git & GitHub
             </h1>
             {userName && (
@@ -176,7 +160,7 @@ const Page4 = () => {
                 className="space-y-3"
               >
                 <h3 className="text-lg font-semibold text-white">{video.title}</h3>
-                <div className="relative w-full pb-[56.25%] rounded-lg overflow-hidden bg-black/20 border border-white/10">
+                <div className="relative w-full pb-[56.25%] rounded-lg overflow-hidden bg-black/20 border border-white">
                   <iframe
                     src={video.url}
                     title={video.title}
