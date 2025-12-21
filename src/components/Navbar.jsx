@@ -34,7 +34,7 @@ const Navbar = () => {
             </div>
           </div>
           {user && (
-            <div className="flex-1 flex justify-center">
+            <div className="hidden sm:flex flex-1 justify-center">
               <div className="bg-white text-black px-2 py-1 rounded text-xs font-medium">
                 {user.email}
               </div>
@@ -45,7 +45,7 @@ const Navbar = () => {
               <>
                 <Link
                   to="/page/1"
-                  className={`flex items-center gap-2 px-3 py-1.5 rounded-lg transition-all duration-200 ${
+                  className={`hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg transition-all duration-200 ${
                     isActive('/page/1')
                       ? 'bg-orange-500 text-white'
                       : 'text-gray-300 hover:bg-gray-800 hover:text-white'
