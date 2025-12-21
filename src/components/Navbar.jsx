@@ -8,6 +8,8 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  if (!user) return null;
+
   const handleLogout = () => {
     logout();
     navigate('/login');
@@ -19,9 +21,9 @@ const Navbar = () => {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className="bg-black/30 backdrop-blur-xl border-b border-white/10 sticky top-0 z-50 shadow-xl"
+      className="bg-black/50 backdrop-blur-xl border-b border-white/10 sticky top-0 z-50 shadow-xl"
     >
-      <div className="container mx-auto px-4 py-4">
+      <div className="w-full px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-8">
             {user && (
