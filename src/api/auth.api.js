@@ -6,7 +6,8 @@ const authAPI = axios.create({
   baseURL: `${API_BASE_URL}/auth`,
   headers: {
     'Content-Type': 'application/json'
-  }
+  },
+  timeout: 5000
 });
 
 export const login = async (email, password) => {

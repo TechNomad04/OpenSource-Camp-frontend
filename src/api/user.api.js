@@ -10,7 +10,8 @@ const userAPI = axios.create({
   baseURL: `${API_BASE_URL}/user`,
   headers: {
     'Content-Type': 'application/json'
-  }
+  },
+  timeout: 5000 // 5 second timeout
 });
 
 // Add token to requests

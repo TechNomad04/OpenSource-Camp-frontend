@@ -69,21 +69,6 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Dark overlay for better contrast */}
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px]"></div>
-      
-      {/* Subtle animated overlay that complements the sunset */}
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-orange-900/20 via-transparent to-blue-900/20"
-        animate={{
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
 
       <div className="max-w-md w-full relative z-10 space-y-8">
         {/* Animated Branding Heading */}
@@ -94,7 +79,7 @@ const Login = () => {
           className="text-center"
         >
           <motion.h1
-            className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 drop-shadow-2xl"
+            className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4"
             animate={{
               textShadow: [
                 '0 0 20px rgba(249, 115, 22, 0.5)',
@@ -139,7 +124,7 @@ const Login = () => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <div className="bg-black/30 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-8 space-y-6 backdrop-saturate-150">
+          <div className="bg-black/80 backdrop-blur-md border border-white rounded-2xl p-8 space-y-6">
             {/* Header */}
             <motion.div
               initial={{ opacity: 0, y: -10 }}
@@ -147,7 +132,7 @@ const Login = () => {
               transition={{ delay: 0.2 }}
               className="text-center"
             >
-              <h2 className="text-3xl font-bold text-white mb-2 drop-shadow-lg">
+              <h2 className="text-3xl font-bold text-white mb-2">
                 Welcome Back
               </h2>
               <p className="text-gray-200/90">Sign in to continue your learning journey</p>
@@ -183,7 +168,7 @@ const Login = () => {
                     type="email"
                     autoComplete="email"
                     required
-                    className="w-full pl-10 pr-4 py-3 bg-black/20 backdrop-blur-md border border-white/20 rounded-lg text-white placeholder-gray-400/70 focus:outline-none focus:ring-2 focus:ring-orange-400/50 focus:border-orange-400/50 transition-all shadow-lg"
+                    className="w-full pl-10 pr-4 py-3 bg-black/20 backdrop-blur-md border border-white rounded-lg text-white placeholder-gray-400/70 focus:outline-none focus:ring-2 focus:ring-orange-400/50 focus:border-orange-400/50 transition-all"
                     placeholder="you@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -208,7 +193,7 @@ const Login = () => {
                     type="password"
                     autoComplete="current-password"
                     required
-                    className="w-full pl-10 pr-4 py-3 bg-black/20 backdrop-blur-md border border-white/20 rounded-lg text-white placeholder-gray-400/70 focus:outline-none focus:ring-2 focus:ring-orange-400/50 focus:border-orange-400/50 transition-all shadow-lg"
+                    className="w-full pl-10 pr-4 py-3 bg-black/20 backdrop-blur-md border border-white rounded-lg text-white placeholder-gray-400/70 focus:outline-none focus:ring-2 focus:ring-orange-400/50 focus:border-orange-400/50 transition-all"
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -222,7 +207,7 @@ const Login = () => {
                 disabled={loading}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r from-orange-500/90 to-orange-600/90 backdrop-blur-sm border border-orange-400/30 text-white font-medium rounded-lg hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-400/50 focus:ring-offset-2 focus:ring-offset-transparent disabled:opacity-50 disabled:cursor-not-allowed transition shadow-xl shadow-orange-500/20"
+                className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r from-orange-500/90 to-orange-600/90 backdrop-blur-sm border border-orange-400/30 text-white font-medium rounded-lg hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-400/50 focus:ring-offset-2 focus:ring-offset-transparent disabled:opacity-50 disabled:cursor-not-allowed transition"
               >
                 <LogIn className="w-5 h-5" />
                 {loading ? 'Signing in...' : 'Sign In'}
@@ -232,7 +217,7 @@ const Login = () => {
             {/* Divider */}
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-white/20"></div>
+                <div className="w-full border-t border-white"></div>
               </div>
               <div className="relative flex justify-center text-sm">
                 <span className="px-2 bg-black/30 text-gray-300/80 backdrop-blur-sm">New User?</span>
@@ -244,7 +229,7 @@ const Login = () => {
               onClick={handleRegister}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-black/20 backdrop-blur-md border border-white/20 text-white font-medium rounded-lg hover:bg-black/30 hover:border-white/30 focus:outline-none focus:ring-2 focus:ring-blue-400/50 transition shadow-lg"
+              className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-black/20 backdrop-blur-md border border-white text-white font-medium rounded-lg hover:bg-black/30 focus:outline-none focus:ring-2 focus:ring-blue-400/50 transition"
             >
               <UserPlus className="w-5 h-5" />
               Register

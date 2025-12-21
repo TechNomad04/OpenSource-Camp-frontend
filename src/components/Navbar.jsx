@@ -1,6 +1,6 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { LogOut, BookOpen } from 'lucide-react';
+import { LogOut, BookOpen, Code } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
@@ -21,38 +21,42 @@ const Navbar = () => {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className="bg-black/50 backdrop-blur-xl border-b border-white/10 sticky top-0 z-50 shadow-xl"
+      className="bg-black border-b border-white sticky top-0 z-50"
     >
-      <div className="w-full px-4 py-4">
+      <div className="w-full px-4 py-3">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-8">
+          <div className="flex items-center">
+            <div className="flex items-center space-x-2">
+              <Code className="w-5 h-5 text-orange-400" />
+              <span className="text-white font-bold text-base">OpenSource Camp</span>
+            </div>
+          </div>
+          {user && (
+            <div className="flex-1 flex justify-center">
+              <div className="bg-white text-black px-2 py-1 rounded text-xs font-medium">
+                {user.email}
+              </div>
+            </div>
+          )}
+          <div className="flex items-center space-x-3">
             {user && (
-              <div className="flex items-center space-x-4">
+              <>
                 <Link
                   to="/page/1"
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg transition backdrop-blur-sm ${
+                  className={`flex items-center gap-2 px-3 py-1.5 rounded-lg transition-all duration-200 ${
                     isActive('/page/1')
-                      ? 'bg-orange-500/30 text-orange-200 border border-orange-400/30'
-                      : 'text-gray-200 hover:bg-black/20 border border-transparent hover:border-white/10'
+                      ? 'bg-orange-500 text-white'
+                      : 'text-gray-300 hover:bg-gray-800 hover:text-white'
                   }`}
                 >
                   <BookOpen className="w-4 h-4" />
                   <span>Learning</span>
                 </Link>
-              </div>
-            )}
-          </div>
-          <div className="flex items-center space-x-4">
-            {user && (
-              <>
-                <div className="flex items-center gap-3">
-                  <span className="text-gray-200 text-sm">{user.email}</span>
-                </div>
                 <motion.button
                   onClick={handleLogout}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="flex items-center gap-2 px-4 py-2 bg-red-500/20 text-red-300 border border-red-400/30 rounded-lg hover:bg-red-500/30 transition backdrop-blur-sm"
+                  className="flex items-center gap-2 px-3 py-1.5 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all duration-200"
                 >
                   <LogOut className="w-4 h-4" />
                   <span>Logout</span>

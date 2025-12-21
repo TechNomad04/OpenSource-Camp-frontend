@@ -38,22 +38,6 @@ const Page3 = () => {
       {/* Microsoft Learn Plan Button - Top Right */}
       <LearnPlanButton />
 
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px]"></div>
-      
-      {/* Subtle gradient overlay */}
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-orange-900/10 via-transparent to-blue-900/10"
-        animate={{
-          opacity: [0.2, 0.4, 0.2],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-
       <div className="max-w-4xl mx-auto relative z-10">
         {/* Progress Indicator */}
         <ProgressIndicator />
@@ -62,7 +46,7 @@ const Page3 = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-black/30 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-8 md:p-12 backdrop-saturate-150"
+          className="bg-black/80 backdrop-blur-md border border-white rounded-2xl p-8 md:p-12"
         >
           {/* Header */}
           <div className="text-center mb-8">
@@ -74,7 +58,7 @@ const Page3 = () => {
             >
               <BookOpen className="w-16 h-16 text-blue-400" />
             </motion.div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Step 3: Microsoft Learn GitHub & Open Source Plan
             </h1>
             {userName && (
@@ -124,19 +108,19 @@ const Page3 = () => {
               What You Need to Do
             </h2>
             <div className="space-y-3 text-gray-200/90">
-              <div className="flex items-start gap-3 p-4 bg-black/20 rounded-lg border border-white/5">
+              <div className="flex items-start gap-3 p-4 bg-black/20 rounded-lg border border-white">
                 <span className="text-orange-400 font-bold text-xl">1.</span>
                 <p>Click the <strong className="text-white">"Microsoft Learn Plan"</strong> button in the top-right corner</p>
               </div>
-              <div className="flex items-start gap-3 p-4 bg-black/20 rounded-lg border border-white/5">
+              <div className="flex items-start gap-3 p-4 bg-black/20 rounded-lg border border-white">
                 <span className="text-orange-400 font-bold text-xl">2.</span>
                 <p>Click <strong className="text-white">"Start Plan"</strong> on the Microsoft Learn page</p>
               </div>
-              <div className="flex items-start gap-3 p-4 bg-black/20 rounded-lg border border-white/5">
+              <div className="flex items-start gap-3 p-4 bg-black/20 rounded-lg border border-white">
                 <span className="text-orange-400 font-bold text-xl">3.</span>
                 <p>Register or sign in if you haven't already (use your GitHub account if prompted)</p>
               </div>
-              <div className="flex items-start gap-3 p-4 bg-black/20 rounded-lg border border-white/5">
+              <div className="flex items-start gap-3 p-4 bg-black/20 rounded-lg border border-white">
                 <span className="text-orange-400 font-bold text-xl">4.</span>
                 <p>Complete <strong className="text-white">all modules</strong> in the plan</p>
               </div>

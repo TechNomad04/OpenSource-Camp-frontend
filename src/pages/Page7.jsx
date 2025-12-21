@@ -83,22 +83,6 @@ const Page7 = () => {
       {/* Microsoft Learn Plan Button - Top Right */}
       <LearnPlanButton />
 
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px]"></div>
-      
-      {/* Subtle gradient overlay */}
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-orange-900/10 via-transparent to-blue-900/10"
-        animate={{
-          opacity: [0.2, 0.4, 0.2],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-
       <div className="max-w-4xl mx-auto relative z-10">
         {/* Progress Indicator */}
         <ProgressIndicator />
@@ -107,7 +91,7 @@ const Page7 = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-black/30 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-8 md:p-12 backdrop-saturate-150"
+          className="bg-black/80 backdrop-blur-md border border-white rounded-2xl p-8 md:p-12"
         >
           {/* Header */}
           <div className="text-center mb-8">
@@ -119,7 +103,7 @@ const Page7 = () => {
             >
               <Rocket className="w-16 h-16 text-orange-400" />
             </motion.div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Step 7: Starting Your Own Open Source Project
             </h1>
             {userName && (
@@ -184,7 +168,7 @@ const Page7 = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.5 + index * 0.1 }}
-                  className="p-5 bg-black/20 rounded-lg border border-white/5 hover:border-white/10 transition"
+                  className="p-5 bg-black/20 rounded-lg border border-white transition"
                 >
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0 w-10 h-10 rounded-full bg-orange-500/30 border border-orange-400/50 flex items-center justify-center text-orange-300">
@@ -240,25 +224,25 @@ const Page7 = () => {
               Pro Tips for Success
             </h2>
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="p-4 bg-black/20 rounded-lg border border-white/5">
+              <div className="p-4 bg-black/20 rounded-lg border border-white">
                 <h3 className="text-white font-semibold mb-2">Start Small</h3>
                 <p className="text-gray-200/90 text-sm">
                   Begin with a focused, achievable goal. You can always expand later.
                 </p>
               </div>
-              <div className="p-4 bg-black/20 rounded-lg border border-white/5">
+              <div className="p-4 bg-black/20 rounded-lg border border-white">
                 <h3 className="text-white font-semibold mb-2">Be Consistent</h3>
                 <p className="text-gray-200/90 text-sm">
                   Regular updates and communication keep your project active and engaging.
                 </p>
               </div>
-              <div className="p-4 bg-black/20 rounded-lg border border-white/5">
+              <div className="p-4 bg-black/20 rounded-lg border border-white">
                 <h3 className="text-white font-semibold mb-2">Welcome Feedback</h3>
                 <p className="text-gray-200/90 text-sm">
                   Listen to your users and contributors. Their input makes your project better.
                 </p>
               </div>
-              <div className="p-4 bg-black/20 rounded-lg border border-white/5">
+              <div className="p-4 bg-black/20 rounded-lg border border-white">
                 <h3 className="text-white font-semibold mb-2">Stay Organized</h3>
                 <p className="text-gray-200/90 text-sm">
                   Use issues, milestones, and project boards to track progress and tasks.

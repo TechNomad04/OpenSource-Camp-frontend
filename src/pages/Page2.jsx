@@ -88,22 +88,6 @@ const Page2 = () => {
 
   return (
     <div className="min-h-screen py-8 px-4 relative">
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px]"></div>
-      
-      {/* Subtle gradient overlay */}
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-orange-900/10 via-transparent to-blue-900/10"
-        animate={{
-          opacity: [0.2, 0.4, 0.2],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-
       <div className="max-w-4xl mx-auto relative z-10">
         {/* Progress Indicator */}
         <ProgressIndicator />
@@ -112,7 +96,7 @@ const Page2 = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-black/30 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-8 md:p-12 backdrop-saturate-150"
+          className="bg-black/80 backdrop-blur-md border border-white rounded-2xl p-8 md:p-12"
         >
           {/* Header */}
           <div className="text-center mb-8">
@@ -124,7 +108,7 @@ const Page2 = () => {
             >
               <BookOpen className="w-16 h-16 text-blue-400" />
             </motion.div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Step 2: Microsoft Learn & GitHub Integration
             </h1>
             {userName && (
@@ -195,7 +179,7 @@ const Page2 = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.5 + index * 0.1 }}
-                  className="flex items-start gap-4 p-4 bg-black/20 rounded-lg border border-white/5"
+                  className="flex items-start gap-4 p-4 bg-black/20 rounded-lg border border-white"
                 >
                   <div className="flex-shrink-0 w-8 h-8 rounded-full bg-orange-500/30 border border-orange-400/50 flex items-center justify-center text-orange-300 font-bold">
                     {step.number}
@@ -240,7 +224,7 @@ const Page2 = () => {
                   onClick={handleClear}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="flex items-center gap-2 px-4 py-2 bg-black/30 backdrop-blur-sm border border-white/20 text-white rounded-lg hover:bg-black/40 transition"
+                  className="flex items-center gap-2 px-4 py-2 bg-black/30 backdrop-blur-sm border border-white text-white rounded-lg hover:bg-black/40 transition"
                   title="Edit Microsoft Learn email"
                 >
                   <Edit2 className="w-4 h-4" />
@@ -280,7 +264,7 @@ const Page2 = () => {
                   onClick={handleOpenMicrosoftLearn}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-black/20 backdrop-blur-md border border-white/20 text-white font-medium rounded-lg hover:bg-black/30 hover:border-white/30 transition shadow-lg"
+                  className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-black/20 backdrop-blur-md border border-white text-white font-medium rounded-lg hover:bg-black/30 transition"
                 >
                   <ExternalLink className="w-5 h-5" />
                   Open Microsoft Learn
@@ -300,7 +284,7 @@ const Page2 = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="your.email@example.com"
-                    className="w-full pl-10 pr-4 py-3 bg-black/20 backdrop-blur-md border border-white/20 rounded-lg text-white placeholder-gray-400/70 focus:outline-none focus:ring-2 focus:ring-orange-400/50 focus:border-orange-400/50 transition-all shadow-lg"
+                    className="w-full pl-10 pr-4 py-3 bg-black/20 backdrop-blur-md border border-white rounded-lg text-white placeholder-gray-400/70 focus:outline-none focus:ring-2 focus:ring-orange-400/50 focus:border-orange-400/50 transition-all"
                     required
                   />
                 </div>
@@ -315,7 +299,7 @@ const Page2 = () => {
                 disabled={loading || !email.trim()}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full flex items-center justify-center gap-2 py-4 px-6 bg-gradient-to-r from-orange-500/90 to-orange-600/90 backdrop-blur-sm border border-orange-400/30 text-white font-medium rounded-lg hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-400/50 disabled:opacity-50 disabled:cursor-not-allowed transition shadow-xl shadow-orange-500/20"
+                className="w-full flex items-center justify-center gap-2 py-4 px-6 bg-gradient-to-r from-orange-500/90 to-orange-600/90 backdrop-blur-sm border border-orange-400/30 text-white font-medium rounded-lg hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-400/50 disabled:opacity-50 disabled:cursor-not-allowed transition"
               >
                 {loading ? (
                   'Saving...'

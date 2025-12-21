@@ -52,8 +52,12 @@ const PageGuard = ({ pageNumber, children }) => {
       }
     } catch (error) {
       console.error('Error checking page access:', error);
-      // On error, redirect to page 1
-      navigate('/page/1', { replace: true });
+      // On error, allow access to page 1, otherwise redirect to page 1
+      if (pageNumber === 1) {
+        setHasAccess(true);
+      } else {
+        navigate('/page/1', { replace: true });
+      }
     } finally {
       setLoading(false);
     }
