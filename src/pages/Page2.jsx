@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { BookOpen, CheckCircle2, ExternalLink, ArrowRight, Mail, Edit2 } from 'lucide-react';
+import { BookOpen, CheckCircle2, ExternalLink, ArrowRight, User, Edit2 } from 'lucide-react';
 import { saveMicrosoftLearnEmail, getUserProgress } from '../api/user.api';
 import ProgressIndicator from '../components/ProgressIndicator';
 
 const Page2 = () => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -21,7 +21,7 @@ const Page2 = () => {
     try {
       const progress = await getUserProgress();
       if (progress.microsoftLearnEmail) {
-        setEmail(progress.microsoftLearnEmail);
+        setUsername(progress.microsoftLearnEmail);
         setSuccess(true);
       }
       if (progress.name) {
@@ -47,10 +47,15 @@ const Page2 = () => {
     setError('');
     setLoading(true);
 
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setError('Please enter a valid email address');
+    // Username validation
+    if (!username.trim()) {
+      setError('Please enter your Microsoft Learn username');
+      setLoading(false);
+      return;
+    }
+
+    if (username.includes(' ')) {
+      setError('Username cannot contain spaces');
       setLoading(false);
       return;
     }
@@ -58,7 +63,7 @@ const Page2 = () => {
     try {
       // If there was a previous success, clear it first
       const clearPrevious = success;
-      await saveMicrosoftLearnEmail(email.trim(), clearPrevious);
+      await saveMicrosoftLearnEmail(username.trim(), clearPrevious);
       setSuccess(true);
       
       // Show success message, then navigate
@@ -66,7 +71,7 @@ const Page2 = () => {
         navigate('/page/3');
       }, 1500);
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to save email');
+      setError(err.response?.data?.message || 'Failed to save username');
     } finally {
       setLoading(false);
     }
@@ -216,7 +221,7 @@ const Page2 = () => {
                   <CheckCircle2 className="w-6 h-6" />
                   <div>
                     <p className="font-semibold">Excellent work{userName ? `, ${userName}` : ''}! 🎊</p>
-                    <p>Your Microsoft Learn email ({email}) has been saved.</p>
+                    <p>Your Microsoft Learn username ({username}) has been saved.</p>
                   </div>
                 </div>
                 <motion.button
@@ -224,7 +229,7 @@ const Page2 = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className="flex items-center gap-2 px-4 py-2 bg-black/30 backdrop-blur-sm border border-white text-white rounded-lg hover:bg-black/40 transition"
-                  title="Edit Microsoft Learn email"
+                  title="Edit Microsoft Learn username"
                 >
                   <Edit2 className="w-4 h-4" />
                   <span className="text-sm">Edit</span>
@@ -270,32 +275,46 @@ const Page2 = () => {
                 </motion.button>
               </div>
 
-              {/* Email Input */}
+              {/* How to Get Username Image */}
+              <div className="mb-6">
+                <h3 className="text-lg font-semibold text-white mb-3">
+                  How to Find Your Microsoft Learn Username
+                </h3>
+                <div className="bg-black/20 rounded-lg p-4 border border-white">
+                  <img 
+                    src="https://lh7-rt.googleusercontent.com/formsz/AN7BsVC2Dar6J6qIngbUHGKdImZUhC7yFpI9lWI5VYiBKGn6yrxgMqkqT6qjAPlxThSdkxMHk5VhGmuP48D1uBpEO59gUU-jNuOhjoWEI-Qcr9F0qvkcpE0TuJRMS4Q6aXYJ2160VVGP3MKEtgZ6OogptGV2Gt_FZ8oUkfZs?key=B2fPmc5xNl_GARz54trFug"
+                    alt="How to get Microsoft Learn username"
+                    className="w-full rounded-lg border border-white/20"
+                  />
+                </div>
+              </div>
+
+              {/* Username Input */}
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-200 mb-2">
-                  Email ID linked with Microsoft Learn
+                <label htmlFor="username" className="block text-sm font-medium text-gray-200 mb-2">
+                  Microsoft Learn Username
                 </label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-300/70 w-5 h-5 z-10" />
+                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-300/70 w-5 h-5 z-10" />
                   <input
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="your.email@example.com"
+                    id="username"
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="e.g., your-username"
                     className="w-full pl-10 pr-4 py-3 bg-black/20 backdrop-blur-md border border-white rounded-lg text-white placeholder-gray-400/70 focus:outline-none focus:ring-2 focus:ring-orange-400/50 focus:border-orange-400/50 transition-all"
                     required
                   />
                 </div>
                 <p className="mt-2 text-sm text-gray-400">
-                  This is the email address associated with your Microsoft Learn account
+                  This is your Microsoft Learn username (not email). See the image above for how to find it.
                 </p>
               </div>
 
               {/* Continue Button */}
               <motion.button
                 type="submit"
-                disabled={loading || !email.trim()}
+                disabled={loading || !username.trim()}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="w-full flex items-center justify-center gap-2 py-4 px-6 bg-gradient-to-r from-orange-500/90 to-orange-600/90 backdrop-blur-sm border border-orange-400/30 text-white font-medium rounded-lg hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-400/50 disabled:opacity-50 disabled:cursor-not-allowed transition"
