@@ -27,9 +27,9 @@ const Page7 = () => {
   };
 
   const handleComplete = () => {
-    // Show completion message
+    // Navigate to next page after a short delay
     setTimeout(() => {
-      // Could navigate to a completion page or show a final message
+      navigate('/page/8');
     }, 1500);
   };
 

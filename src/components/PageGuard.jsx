@@ -17,8 +17,10 @@ const PageGuard = ({ pageNumber, children }) => {
 
   const checkAccess = async () => {
     try {
+      console.log(`PageGuard: Checking access for page ${pageNumber}`);
       const progress = await getUserProgress();
       setUserProgress(progress);
+      console.log(`PageGuard: User progress:`, progress);
 
       // Page 1 is always accessible
       if (pageNumber === 1) {
@@ -29,11 +31,16 @@ const PageGuard = ({ pageNumber, children }) => {
 
       // For other pages, check if previous page is completed
       const previousPage = pageNumber - 1;
-      if (progress.completedPages && progress.completedPages.includes(previousPage)) {
+      const completedPages = (progress.completedPages || []).map(p => Number(p));
+      console.log(`PageGuard: Previous page ${previousPage}, Completed pages:`, completedPages);
+      
+      if (completedPages.includes(Number(previousPage))) {
+        console.log(`PageGuard: Access granted for page ${pageNumber}`);
         setHasAccess(true);
+        setLoading(false);
       } else {
+        console.log(`PageGuard: Access denied for page ${pageNumber}, previous page not completed`);
         // Find the highest unlocked page
-        const completedPages = progress.completedPages || [];
         let highestUnlocked = 1;
         
         for (let i = 1; i <= pageNumber; i++) {
@@ -44,6 +51,8 @@ const PageGuard = ({ pageNumber, children }) => {
           }
         }
 
+        console.log(`PageGuard: Redirecting to page ${highestUnlocked}`);
+        setLoading(false);
         // Redirect to highest unlocked page
         navigate(`/page/${highestUnlocked}`, { 
           replace: true,
@@ -52,14 +61,13 @@ const PageGuard = ({ pageNumber, children }) => {
       }
     } catch (error) {
       console.error('Error checking page access:', error);
+      setLoading(false);
       // On error, allow access to page 1, otherwise redirect to page 1
       if (pageNumber === 1) {
         setHasAccess(true);
       } else {
         navigate('/page/1', { replace: true });
       }
-    } finally {
-      setLoading(false);
     }
   };
 

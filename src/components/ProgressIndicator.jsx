@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { BookOpen, Code, GitBranch, Zap, Database, Globe, Trophy } from 'lucide-react';
+import { BookOpen, Code, GitBranch, Zap, Database, Globe, Trophy, Award } from 'lucide-react';
 import { getUserProgress } from '../api/user.api';
 
-const TOTAL_PAGES = 7; // Update this as more pages are added
+const TOTAL_PAGES = 8; // Update this as more pages are added
 
-const stepIcons = [BookOpen, Code, GitBranch, Zap, Database, Globe, Trophy]; // Icons for each step
+const stepIcons = [BookOpen, Code, GitBranch, Zap, Database, Globe, Trophy, Award]; // Icons for each step
 
 const ProgressIndicator = () => {
   const [completedPages, setCompletedPages] = useState([]);
@@ -16,10 +16,8 @@ const ProgressIndicator = () => {
   const currentPage = parseInt(location.pathname.split('/page/')[1]) || 1;
 
   useEffect(() => {
-    // Only fetch if we don't have data yet, or if it's been a while
-    if (completedPages.length === 0) {
-      fetchProgress();
-    }
+    // Fetch progress whenever location changes to ensure we have the latest data
+    fetchProgress();
   }, [location.pathname]);
 
   const fetchProgress = async () => {
@@ -75,6 +73,11 @@ const ProgressIndicator = () => {
             const completed = isPageCompleted(pageNum);
             const unlocked = isPageUnlocked(pageNum);
             const IconComponent = stepIcons[pageNum - 1];
+
+            // Safety check: if icon is missing, skip rendering this page
+            if (!IconComponent) {
+              return null;
+            }
 
             return (
               <motion.button

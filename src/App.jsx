@@ -12,6 +12,7 @@ import Page4 from './pages/Page4';
 import Page5 from './pages/Page5';
 import Page6 from './pages/Page6';
 import Page7 from './pages/Page7';
+import Page8 from './pages/Page8';
 import './App.css';
 
 function AppRoutes() {
@@ -35,66 +36,76 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
-        <Route
-          path="/page/2"
-          element={
-            <ProtectedRoute>
-              <PageGuard pageNumber={2}>
-                <Page2 />
-              </PageGuard>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/page/3"
-          element={
-            <ProtectedRoute>
-              <PageGuard pageNumber={3}>
-                <Page3 />
-              </PageGuard>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/page/4"
-          element={
-            <ProtectedRoute>
-              <PageGuard pageNumber={4}>
-                <Page4 />
-              </PageGuard>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/page/5"
-          element={
-            <ProtectedRoute>
-              <PageGuard pageNumber={5}>
-                <Page5 />
-              </PageGuard>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/page/6"
-          element={
-            <ProtectedRoute>
-              <PageGuard pageNumber={6}>
-                <Page6 />
-              </PageGuard>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/page/7"
-          element={
-            <ProtectedRoute>
-              <PageGuard pageNumber={7}>
-                <Page7 />
-              </PageGuard>
-            </ProtectedRoute>
-          }
-        />
+      <Route
+        path="/page/2"
+        element={
+          <ProtectedRoute>
+            <PageGuard pageNumber={2}>
+              <Page2 />
+            </PageGuard>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/page/3"
+        element={
+          <ProtectedRoute>
+            <PageGuard pageNumber={3}>
+              <Page3 />
+            </PageGuard>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/page/4"
+        element={
+          <ProtectedRoute>
+            <PageGuard pageNumber={4}>
+              <Page4 />
+            </PageGuard>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/page/5"
+        element={
+          <ProtectedRoute>
+            <PageGuard pageNumber={5}>
+              <Page5 />
+            </PageGuard>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/page/6"
+        element={
+          <ProtectedRoute>
+            <PageGuard pageNumber={6}>
+              <Page6 />
+            </PageGuard>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/page/7"
+        element={
+          <ProtectedRoute>
+            <PageGuard pageNumber={7}>
+              <Page7 />
+            </PageGuard>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/page/8"
+        element={
+          <ProtectedRoute>
+            <PageGuard pageNumber={8}>
+              <Page8 />
+            </PageGuard>
+          </ProtectedRoute>
+        }
+      />
         {/* Default route - redirect to first page */}
         <Route path="/" element={<Navigate to="/page/1" replace />} />
         <Route path="*" element={<Navigate to="/page/1" replace />} />
